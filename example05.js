@@ -47,11 +47,16 @@ io.sockets.on("connection", function(socket) {
     if (commandNo == "2") {
     board.digitalWrite(12, board.LOW);
     }
-       
-    
+      if (commandNo == "5") {
+      board.digitalWrite(13, board.HIGH);
+      board.digitalWrite(12, board.HIGH);
+    }
+    if (commandNo == "4") {
+      board.digitalWrite(13, board.LOW);
+      board.digitalWrite(12, board.LOW); 
     }    
     
-    
+    }
 
 });
 });
