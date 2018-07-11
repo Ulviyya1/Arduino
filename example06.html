@@ -1,0 +1,39 @@
+<!doctype html>
+<meta charset = utf8>
+<html>
+
+<head>
+    <title>Example with buttons</title>
+</head>
+
+<body>
+<div id="print1"></div>
+
+<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+<script type="text/javascript">
+"use strict"; // in order to use clasess
+
+var socket = io.connect("192.168.1.100:8080"); //connect via socket
+
+var divElement = document.getElementById("print1"); // variable for div object where the values will be printed (logged)
+function log(msg) {
+    divElement.innerHTML += "<div>" + msg + "</div>"; // we print it to div
+}
+socket.on("messageToClient", function (msg){
+    log(msg); // add msg
+});
+
+socket.on("disconnect", function(){
+    log("Disconnected from the server"); // we print status of disconn. to div
+});
+
+
+
+
+
+
+
+    
+</script>
+</body>
+</html>
