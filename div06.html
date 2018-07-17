@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<meta charset=utf-8>
+
+<html>
+<head>
+<title>Log into html div element</title>
+</head>    
+
+Print out:
+<br>
+<div id="print1"></div>
+
+<script type="text/javascript">
+"use strict"; // in order to use clasess
+    
+var time = 0;
+var stopTime = 1000;
+    
+var divElement = document.getElementById("print1"); // variable for div object where the values will be printed (logged)
+
+function log(msg) {
+    divElement.innerHTML += "<div>" + msg + "</div>"; // we print it to div
+}        
+
+function loop() {
+    
+    time++;
+
+    log(Math.random().toFixed(5));
+        
+    var timerVar = setTimeout(loop, 300); // on 300ms we perform the function loop
+    
+    if (time >= stopTime) {clearTimeout (timerVar)};
+}
+    
+loop(); // start function loop
+
+</script>
+    
+</body>
+
+</html>
