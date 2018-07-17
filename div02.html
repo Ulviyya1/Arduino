@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<meta charset=utf-8>
+
+<html>
+<head>
+<title>Log into html div element</title>
+</head>    
+
+<div id="print1">Test text A</div>
+
+<script type="text/javascript">
+"use strict"; // in order to use clasess
+    
+var divElement = document.getElementById("print1"); // variable for div object where the values will be printed (logged)
+
+divElement.innerHTML += "<div>" + "Test text B" + "</div>"; // we print it to div
+    
+</script>
+    
+</body>
+
+</html>
