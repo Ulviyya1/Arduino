@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<meta charset=utf-8>
+
+<!-- Ulviyya Rahmanova July 2018 -->
+<!-- University of Maribor | Faculty of Organizational Sciences -->
+<!-- Cybernetics & Decision Support Systems Laboratory -->
+<!-- WSB University | Dabrowa Gornicza -->
+
+<html>
+<head>
+<title>Log into html div element</title>
+</head>    
+
+Print out:
+<br>
+<div id="print1"></div>
+
+<script type="text/javascript">
+"use strict"; // in order to use clasess
+var time = 0;
+var stopTime = 1000;
+
+var divPrint1; // variable for div object where the values will be printed (logged)
+
+class LogDiv {
+    constructor(divId, numberOfLinesBeforeScroll) {
+        this.divElement = document.getElementById(divId); // name of div where values will be printed
+        this.numberOfLinesBeforeScroll = numberOfLinesBeforeScroll; // number of lines which print before scroll
+        this.linesPrintCounter = 0;
+    }
+
+    log(msg) { // function for printout of the messages with scroll functionality
+        var node=document.createElement("tr"); // we create the variable node as the a table row (tr)
+        var textnode=document.createTextNode(this.linesPrintCounter + " | " + msg); // we create element with the text adding the counter
+        node.appendChild(textnode); // adding text to "node", i.e. table row
+        this.divElement.insertBefore(node, this.divElement.childNodes[0]); // inserting into variable node
+        if (this.linesPrintCounter > this.numberOfLinesBeforeScroll-1) { // if the lines are more than limit -> start with scroll
+            this.divElement.removeChild(this.divElement.childNodes[this.numberOfLinesBeforeScroll]); // we remove the oldest printout
+        }
+        this.linesPrintCounter++; // increasing the number of printouts
+    }
+}
+
+function loop() {
+    
+    time++;
+
+    divPrint1.log(Math.random().toFixed(5));
+        
+    var timerVar = setTimeout(loop, 300); // on 300ms we perform the function loop
+    
+    if (time >= stopTime) {clearTimeout (timerVar)};
+}
+
+divPrint1 = new LogDiv("print1", 10); // as the argument at the creation of the new object we declare the div name into which the printout of the log will be performed and the number of lines before the scroll 
+    
+loop(); // start function loop
+
+</script>
+    
+</body>
+
+</html>
