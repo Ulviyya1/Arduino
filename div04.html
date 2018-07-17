@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<meta charset=utf-8>
+
+<html>
+<head>
+<title>Log into html div element</title>
+</head>    
+
+Enter text for log:
+<input type="text" id="inputvalue" onkeypress="if(event.keyCode == 13){printToDiv()}" />    
+<br>
+<br>
+Print out:
+<br>
+<div id="print1"></div>
+
+<script type="text/javascript">
+"use strict"; // in order to use clasess
+    
+var divElement = document.getElementById("print1"); // variable for div object where the values will be printed (logged)
+
+function log(msg) {
+    divElement.innerHTML += "<div>" + msg + "</div>"; // we print it to div
+}        
+
+function printToDiv () {
+    var valueFromTheInputField = document.getElementById("inputvalue").value;
+    log(valueFromTheInputField);
+    document.getElementById("inputvalue").value = ""; // clear the value in the input field
+}    
+    
+</script>
+    
+</body>
+
+</html>
