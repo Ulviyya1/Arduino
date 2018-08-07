@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<meta charset = utf8>
+<html>
+<head>
+    <title>assignment01</title>
+</head>
+
+<body>
+
+
+<p></p>
+
+PWM: <input id="pwm" value=100 />
+<button id="gumbPošljiPWM" onClick="pošljiPWM()">Pošlji PWM</button>
+<button id="gumbLevo" onClick="levo()">Levo</button>
+<button id="gumbDesno" onClick="desno()">Desno</button>
+<button id="gumbStop" onClick="stop()">Stop</button>
+
+<div id="print1"></div>
+
+<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+
+<script type="text/javascript">
+var socket = io.connect("192.168.1.100:8080"); // povezava na strež.
+function pošljiPWM (parametr) {
+   // vrednostPWM = document.getElementById("pwm").value;
+    socket.emit("pošljiPWM", parametr/4);
+}
+function levo () {
+    socket.emit("levo", 1);
+}
+function desno() {
+    socket.emit("desno", 0);
+}
+function stop() {
+    socket.emit("stop", 0);
+    
+}
+
+var divElement = document.getElementById("print1"); // var for div el.
+   var numberOfLinesBeforeScroll = 10;
+   var linesPrintCounter = 0;
+   function log(msg) {
+   var node=document.createElement("tr"); // we create the variable node as the a table row (tr)
+   var textnode=document.createTextNode(linesPrintCounter + " | " + msg/4); // we create element with the text adding the counter
+   node.appendChild(textnode); // adding text to "node", i.e. table row
+   divElement.insertBefore(node, divElement.childNodes[0]); // inserting into variable node
+   if (linesPrintCounter > numberOfLinesBeforeScroll-1) { // if the lines are more than limit -> start with scroll
+   divElement.removeChild(divElement.childNodes[numberOfLinesBeforeScroll]); // we remove the oldest printout
+   }
+   linesPrintCounter++; // increasing the number of printouts
+    }
+    
+socket.on("messageToClient", function (msg) {
+    log(msg); // adding message to div
+});
+
+socket.on("clientReadValues", function(value) {
+    pošljiPWM(value.desiredValue);
+    log(value.desiredValue);
+});
+
+</script>
+
+
+</body>
+
+</html>
