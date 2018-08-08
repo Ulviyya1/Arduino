@@ -48,13 +48,7 @@ board.on("ready", function() {
             
             board.analogWrite(3,pwm2); // zapišem hitrost pwm na pin 3
             console.log("PWM poslan." + pwm2);
-       // {if (Value == 1)
-       // board.digitalWrite(2, board.right);
-       // }
-       // if (Value == 0)
-       // {board.digitalWrite(2, board.left);
-    
-//}            
+         
 
         });
         socket.on("left", function(Value) {
