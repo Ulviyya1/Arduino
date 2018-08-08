@@ -1,4 +1,4 @@
-var http = require("http").createServer(handler); // ob zahtevi req -> handler
+var http = require("http").createServer(handler); // handler
 var firmata = require("firmata");
 var fs = require("fs");
 var io = require("socket.io").listen(http);
