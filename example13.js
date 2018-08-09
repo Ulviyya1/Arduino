@@ -34,7 +34,7 @@ function handler(req, res) {
 
 var desiredValue = 0; // desired value var
 var actualValue = 0; // variable for actual value (output value)
-var factor = 1; // proportional factor that determines the speed of aproaching toward desired value
+var factor = 0.25; // proportional factor that determines the speed of aproaching toward desired value
 http.listen(8080); // server will listen on port 8080
 
 board.on("ready", function() {
