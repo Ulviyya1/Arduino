@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<meta charset = utf8>
+<html>
+	 
+<head>
+<title>Model dynamic system</title>
+</head>
+ 
+<body onload="load();">
+<div id="printout1"></div>
+<div id="printout2"></div>
+<div id="printout3"></div>
+
+<script type="text/javascript">
+"use strict";
+
+var printout1 = document.getElementById("printout1");
+var printout2 = document.getElementById("printout2");
+var printout3 = document.getElementById("printout3");
+
+var dt = 1;
+var time = 0;
+var stoptime = 10;
+
+var levelArray = new Array();
+var rateArray = new Array();
+var auxiliaryArray = new Array();
+
+class Level {
+    constructor (value) {
+       this.value = value;
+    levelArray.push(this);
+ }
+ 
+ updateFn () {};
+ 
+ update () {
+   this.value = this.value + dt * this.updateFn();
+ }
+}
+
+class Rate {
+    constructor (value) {
+       this.value = value;
+    rateArray.push(this);
+  }
+  updateF () {};
+  
+  update () {
+    this.value = this.updateFn();
+ }
+}
+
+class Auxiliary {
+    constructor (value) {
+       this.value = value;
+       auxiliaryArray.push(this);
+  }
+  
+  updateFn () {};
+  
+  update () {
+  this.value = this.updateFn();
+ }
+}
+
+//Definicition Start model
+var State = new Level(10);
+var inflow = new Rate();
+var a = 0.5;
+
+//definition Auxiliary
+printout1.innerHTML += levelArray[0].value + " | ";
+
+//Rate
+inflow.updateFn = function() {return a * State.value};
+
+//Level
+State.updateFn = function() {return inflow.value};
+
+
+//Definition Stop model 
+
+
+function init() {
+   for (var i=0; i<auxiliaryArray.length; i++) {
+       auxiliaryArray[i].update();
+}
+
+for (var i=0; i<rateArray.length; i++) {
+     rateArray[i].update();
+     printout2.innerHTML += rateArray[0].value + " | ";
+  }
+  
+  printout3.innerHTML += time + " | ";
+}
+
+
+function loop() {
+   time = time + 1;
+   printout3.innerHTML += time + " | ";
+
+   for (var i=0; i<levelArray.length; i++) {
+        levelArray[i].update();
+   }
+   printout1.innerHTML += levelArray[0].value + " | ";
+   
+   for (var i=0; i<auxiliaryArray.length; i++) {
+        auxiliaryArray[i].update();
+  }
+  
+   for (var i=0; i<rateArray.length; i++) {
+        rateArray[i].update();
+        
+  }
+    
+    printout2.innerHTML += rateArray[0].value + " | ";
+    
+    var timerVar = setTimeout(loop, 300);
+    
+    if (time >= stoptime) {clearTimeout (timerVar)};
+ }
+ 
+ function load() {
+    init();
+    loop();
+}
+</script>
+
+</body>
+
+</html>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+	 
