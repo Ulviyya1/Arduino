@@ -3,7 +3,7 @@
 <html>
 	 
 <head>
-<title>Example with potentiometer</title>
+<title>Adding performance measure</title>
 </head>
  
 <body onload="load();">
@@ -66,6 +66,7 @@ this.divElement = document.getElementById(divId); // name of div where values wi
 this.numberOfLinesBeforeScroll = numberOfLinesBeforeScroll; // number of lines which print before scroll
 this.linesPrintCounter = 0;
 }
+
 log(msg) { // function for printout of the messages with scroll functionality
 var node=document.createElement("tr"); // we create the variable node as the a table row (table row)
 var textnode=document.createTextNode(this.linesPrintCounter + " | " + msg); // we create element with the text
@@ -94,6 +95,7 @@ this.rangeY = maxGraphY - minGraphY;
 for( var i=0; i<color.length; i++ ) {
 this.y.push([]); // example of three row array init. would be: this.y = [[],[],[]];
 }
+
 this.minGraphX = minGraphX;
 this.maxGraphX = maxGraphX;
 this.minGraphY = minGraphY;
@@ -114,7 +116,7 @@ if (this.y[0].length == this.maxGraphX+1) { // if canvas size is 10x10 we have 1
 for (var i = 0; i < yValue.length; i++) { // v zanki gremo po polju yInput in na mestu 0 eno vrednost odrežemo, na koncu pa eno mesto dodamo - zapišemo novo vrednost yInput
 this.y[i].splice(0, 1); // on the position 0 in the vector y we cut one value
 this.y[i][this.maxGraphX] = yValue[i]; // at the end of the array the new value is added
-}
+  }
 }
 else {
 for (var i = 0; i < yValue.length; i++) { // z zanko gremo po vseh vrsticah za matrike y
@@ -132,7 +134,7 @@ this.ctx.strokeStyle = this.color[i]; // determine color
 this.ctx.beginPath(); // for the start of the line
 for (var j=0; j<this.y[0].length; j++) {
 this.ctx.lineTo(this.x[j]/this.rangeX*this.canvasWidth, (this.canvasHeight - ((this.y[i][j]-this.minGraphY)/this.rangeY) * this.canvasHeight)); // for y values we multiply with canas height, eg. 0.25 * 100 = 25
-}
+  }
 this.ctx.stroke();
 }
 	 
@@ -208,7 +210,6 @@ graph5.plot([value.errSum]); // graph for I part
 graph6.plot([value.dErr]); // graph for D part
    
 graph7.plot([value.errSumAbs]); // graph for performance measure
-graph7.ctx.fillText(parseInt(value.errSumAbs),70, 27);
 
 divPrint1.log(value.desiredValue + "|" + value.actualValue + "|" + (value.desiredValue-value.actualValue) + "|" + (value.pwm).toFixed(0));
 });
