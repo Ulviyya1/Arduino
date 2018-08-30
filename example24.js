@@ -1,12 +1,12 @@
-var http = require("http").createServer(handler); // on req - hand
- var io = require("socket.io").listen(http); // socket library
- var fs = require("fs"); // variable for file system for providing html
- var firmata = require("firmata");
+  var http = require("http").createServer(handler); // on req - hand
+  var io = require("socket.io").listen(http); // socket library
+  var fs = require("fs"); // variable for file system for providing html
+  var firmata = require("firmata");
 
  console.log("Starting the code");
 
   var board = new firmata.Board("/dev/ttyACM0", function(){
-  console.log("Connecting to Arduino");
+   console.log("Connecting to Arduino");
    board.pinMode(0, board.MODES.ANALOG); // enable analog pin 0
    board.pinMode(1, board.MODES.ANALOG); // enable analog pin 1
    board.pinMode(2, board.MODES.OUTPUT); // direction of DC motor
@@ -21,8 +21,8 @@ function (err, data) {
    res.writeHead(500, {"Content-Type": "text/plain"});
    return res.end("Error loading html page.");
    }
-  res.writeHead(200);
-  res.end(data);
+   res.writeHead(200);
+   res.end(data);
   });
  }
  
@@ -61,7 +61,7 @@ function (err, data) {
   
   var pwmLimit = 110;
   
-  http.listen(8080); // server will listen on port 8080
+http.listen(8080); // server will listen on port 8080
   
   var sendValueViaSocket = function(){}; // var for sending messages
   var sendStaticMsgViaSocket = function(){}; // for sending static messages
@@ -113,8 +113,8 @@ function (err, data) {
   }); // end of sockets.on connection
   }); // end of board.on ready
   
-  function controlAlgorithm (parameters) {
-    if (parameters.ctrlAlgNo == 1) {
+function controlAlgorithm (parameters) {
+   if (parameters.ctrlAlgNo == 1) {
       pwm = parameters.pCoeff*(desiredValue-actualValue);
       err = desiredValue-actualValue;
       errAbs = Math.abs(err);
@@ -126,7 +126,7 @@ function (err, data) {
      board.analogWrite(3, Math.abs(pwm));
  }
  
-  if (parameters.ctrlAlgNo == 2) {
+   if (parameters.ctrlAlgNo == 2) {
    err = desiredValue - actualValue; // error as difference between desired and actual val.
    errSum += err; // sum of errors | like integral
    errSumAbs += Math.abs(err);
@@ -138,15 +138,15 @@ function (err, data) {
      KdDe_dt = parameters.Kd1*dErr;
      errAbs = Math.abs(err);
       pwm = KpE + KiIedt + KdDe_dt; // we use above parts
-  if (pwm > pwmLimit) {pwm =  pwmLimit} // to limit pwm values
-  if (pwm < -pwmLimit) {pwm = -pwmLimit} // to limit pwm values
-  if (pwm > 0) {board.digitalWrite(2,0)}// direction if > 0
-  if (pwm < 0) {board.digitalWrite(2,1)}  // direction if < 0
+   if (pwm > pwmLimit) {pwm =  pwmLimit} // to limit pwm values
+   if (pwm < -pwmLimit) {pwm = -pwmLimit} // to limit pwm values
+   if (pwm > 0) {board.digitalWrite(2,0)}// direction if > 0
+   if (pwm < 0) {board.digitalWrite(2,1)}  // direction if < 0
   board.analogWrite(3, Math.abs(pwm));
   lastErr = err;
  }
  
- if (parameters.ctrlAlgNo == 3) {
+  if (parameters.ctrlAlgNo == 3) {
     err = desiredValue - actualValue; // error as difference between desired and actual val.
     errSum += err; // sum of errors | like integral
     errSumAbs += Math.abs(err);
@@ -162,11 +162,11 @@ function (err, data) {
    lastErr = err; // save the value of error for next cycle to estimate the derivative
    if (pwm > pwmLimit) {pwm =  pwmLimit} // to limit pwm values
    if (pwm < -pwmLimit) {pwm = -pwmLimit} // to limit pwm values
-  if (pwm > 0) {board.digitalWrite(2,0);} // direction if > 0
+   if (pwm > 0) {board.digitalWrite(2,0);} // direction if > 0
    if (pwm < 0) {board.digitalWrite(2,1);} // direction if < 0
     board.analogWrite(3, Math.abs(pwm));   
   }
-  if (parameters.ctrlAlgNo == 4) {
+   if (parameters.ctrlAlgNo == 4) {
     errLast = err;
     err = desiredValue - actualValue; // error
     errSum += err; // sum of errors, like integral
@@ -193,18 +193,19 @@ function (err, data) {
   board.analogWrite(3, Math.abs(pwm));    
   console.log("algorithm 4");
     }
-    if (parameters.ctrlAlgNo == 5) { // only input
+    
+   if (parameters.ctrlAlgNo == 5) { // only input
        pwm = desiredValue;
-    if(pwm > pwmLimit) {pwm = pwmLimit}; // to limit the value for pwm / positive
-    if(pwm < -pwmLimit) {pwm = -pwmLimit}; // to limit the value for pwm / negative
-    if (pwm > 0) {board.digitalWrite(2,1); board.digitalWrite(4,0);}; // določimo smer če je > 0
-    if (pwm < 0) {board.digitalWrite(2,0); board.digitalWrite(4,1);}; // določimo smer če je < 0
+   if(pwm > pwmLimit) {pwm = pwmLimit}; // to limit the value for pwm / positive
+   if(pwm < -pwmLimit) {pwm = -pwmLimit}; // to limit the value for pwm / negative
+   if (pwm > 0) {board.digitalWrite(2,0);}; // določimo smer če je > 0
+   if (pwm < 0) {board.digitalWrite(2,1);}; // določimo smer če je < 0
     board.analogWrite(3, Math.round(Math.abs(pwm)));
     console.log(Math.round(pwm));
    }
    };
    
-   function startControlAlgorithm (parameters) {
+function startControlAlgorithm (parameters) {
     if (controlAlgorithmStartedFlag == 0) {
     controlAlgorithmStartedFlag = 1;
     intervalCtrl = setInterval(function(){controlAlgorithm(parameters);}, 30); // call the alg. on 30ms
@@ -214,7 +215,7 @@ function (err, data) {
    }
    }
    
-   function stopControlAlgorithm () {
+function stopControlAlgorithm () {
     clearInterval(intervalCtrl); // clear the interval of control algorihtm
     board.analogWrite(3, 0);
     sendStaticMsgViaSocket("Control algorithm " + parametersStore.ctrlAlgNo + " stopped | " + json2txt(parametersStore) + " | errSumAbs = " + errSumAbs);
@@ -233,7 +234,7 @@ function (err, data) {
     parametersStore = {}; // empty temporary json object to report at controAlg stop
   }
   
-  function sendValues (socket) {
+function sendValues (socket) {
     socket.emit("clientReadValues",
    {
     "desiredValue": desiredValue,
@@ -250,7 +251,7 @@ function (err, data) {
      });
  }
  
- function json2txt(obj) // function to print out the json names and values
+function json2txt(obj) // function to print out the json names and values
   {
     var txt = '';
     var recurse = function(_obj) {
