@@ -107,7 +107,7 @@ function init() {
        auxiliaryArray[i].update();
 }
 
-for (var i=0; i<rateArray.length; i++) {
+   for (var i=0; i<rateArray.length; i++) {
      rateArray[i].update();
      printout2.innerHTML += rateArray[0].value + " | ";
   }
@@ -143,7 +143,7 @@ function loop() {
     if (time >= stoptime) {clearTimeout (timerVar)};
  }
  
- function load() {
+function load() {
     init();
     
     graph1 = new Graph("canvas1", 0, 20, 0, 500, ["red"], ["y"], ["0", "20", "0", "500"]); // arguments: Arg1: canvasId, Arg2: maxX, Arg3: maxY, Arg4: [vector of colors]; this determines the size of yValue matrix (if we state one color as eg. ["red"], we assume only one time series, ["red", "green", "blue"] -> three time series) 
