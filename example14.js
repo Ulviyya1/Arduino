@@ -71,8 +71,8 @@ function controlAlgorithm () {
     pwm = factor*(desiredValue-actualValue);
     if(pwm > 255) {pwm = 255} // to limit the value for pwm / positive
     if(pwm < -255) {pwm = -255}// to limit the value for pwm / negative
-    if(pwm > 0) {board.digitalWrite(2,0); } // določimo smer če je > 0
-    if (pwm < 0) {board.digitalWrite(2,1);} // določimo smer če je < 0
+    if(pwm > 0) {board.digitalWrite(2,0); } // 
+    if (pwm < 0) {board.digitalWrite(2,1);} //
     board.analogWrite(3, Math.abs(pwm));
 }
     
