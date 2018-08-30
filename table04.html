@@ -1,0 +1,51 @@
+<!doctype html>
+<meta charset="utf-8">
+
+<!-- Ulviyya Rahmanova August 2018 -->
+<!-- University of Maribor | Faculty of Organizational Sciences -->
+<!-- Cybernetics & Decision Support Systems Laboratory -->
+<!-- WSB University | Dabrowa Gornicza -->
+
+
+<html>
+<head>
+<title> Example with Table</title>    
+</head>
+    
+<body>
+
+<table border="1" id="tableA">
+<tr>
+<td>column1</td><td>column2</td><td>column3</td>    
+</tr>
+</table>
+
+<script type="text/javascript">
+
+function addRow(idTable) {
+    // get a reference to the table
+    var tableRef = document.getElementById(idTable);
+    
+    // add a line(row) at the end of the table
+    var newRow = tableRef.insertRow(tableRef.rows.length);
+    
+    var newCell = newRow.insertCell(0);
+    var newText = document.createTextNode("abc");
+    newCell.appendChild(newText);
+    
+    var newCell = newRow.insertCell(1);
+    var newText = document.createTextNode("def");
+    newCell.appendChild(newText);
+    
+    var newCell = newRow.insertCell(2);
+    var newText = document.createTextNode("ghi");
+    newCell.appendChild(newText);
+}
+    
+addRow("tableA");
+    
+</script>
+    
+</body>    
+    
+</html>

@@ -1,0 +1,59 @@
+<!doctype html>
+<meta charset="utf-8">
+
+<!-- Ulviyya Rahmanova August 2018 -->
+<!-- University of Maribor | Faculty of Organizational Sciences -->
+<!-- Cybernetics & Decision Support Systems Laboratory -->
+<!-- WSB University | Dabrowa Gornicza -->
+
+<html>
+<head>
+<title> Example with Table</title>    
+</head>
+    
+<body>
+    
+<input type="button" value="add" onClick="add();">
+<p></p>
+
+<table border="1" id="tableA">
+<tr>
+<td>column1</td><td>column2</td><td>column3</td>    
+</tr>
+</table>
+
+<script type="text/javascript">
+
+function addRow(idTable, data) {
+    // get a reference to the table
+    var tableRef = document.getElementById(idTable);
+    
+    // add a line(row) at the end of the table
+    var newRow = tableRef.insertRow(tableRef.rows.length);
+    
+    var newCell = newRow.insertCell(0);
+    var newText = document.createTextNode(data[0]);
+    newCell.appendChild(newText);
+    
+    var newCell = newRow.insertCell(1);
+    var newText = document.createTextNode(data[1]);
+    newCell.appendChild(newText);
+    
+    var newCell = newRow.insertCell(2);
+    var newText = document.createTextNode(data[2]);
+    newCell.appendChild(newText);
+}
+
+
+var data = new Array(); // field with the data that we want to display in the table
+data = ["aaa", "bbb", "ccc"];
+    
+function add() {
+    addRow("tableA", data);
+}
+    
+</script>
+    
+</body>    
+    
+</html>
