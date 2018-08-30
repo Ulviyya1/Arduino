@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<meta charset = utf8>
+<html>
+	 
+<head>
+<title>Model dynamic system</title>
+</head>
+ 
+<canvas id="canvas1" width="200" height="100" style="border:1px dashed #00c3c3"></canvas>
+
+
+ 
+<body onload="load();">
+<div id="printout1"></div>
+<div id="printout2"></div>
+<div id="printout3"></div>
+
+<script type="text/javascript" src="graph.js"></script> //graph.js olan kod bu html'da da qeyd oluna biler. Ayri .js file'da da. 
+
+<script type="text/javascript">
+"use strict";
+
+var canvas, ctx; 
+
+canvas = document.getElementById("canvas1");
+ctx = canvas.getContext("2d");
+ctx.strokeStyle = "#ff0000"; // determine red color of the graph
+
+ctx.beginPath(); // start drawing line
+
+ctx.stroke(); // in order to show it on the canvas
+
+var printout1 = document.getElementById("printout1");
+var printout2 = document.getElementById("printout2");
+var printout3 = document.getElementById("printout3");
+
+var dt = 1;
+var time = 0;
+var stoptime = 10;
+
+var levelArray = new Array();
+var rateArray = new Array();
+var auxiliaryArray = new Array();
+
+var graph1;
+
+
+
+class Level {
+    constructor (value) {
+       this.value = value;
+    levelArray.push(this);
+ }
+ 
+ updateFn () {};
+ 
+ update () {
+     this.value = this.value + dt * this.updateFn();
+ }
+}
+
+class Rate {
+    constructor (value) {
+       this.value = value;
+    rateArray.push(this);
+  }
+  updateF () {};
+  
+  update () {
+    this.value = this.updateFn();
+ }
+}
+
+class Auxiliary {
+    constructor (value) {
+       this.value = value;
+       auxiliaryArray.push(this);
+  }
+  
+  updateFn () {};
+  
+  update () {
+  this.value = this.updateFn();
+ }
+}
+
+//Definicition Start model
+var State = new Level(10);
+var inflow = new Rate();
+var a = 0.5;
+
+//definition Auxiliary
+printout1.innerHTML += levelArray[0].value + " | ";
+
+//Rate
+inflow.updateFn = function() {return a * State.value};
+
+//Level
+State.updateFn = function() {return inflow.value};
+
+
+//Definition Stop model 
+
+
+function init() {
+   for (var i=0; i<auxiliaryArray.length; i++) {
+       auxiliaryArray[i].update();
+}
+
+for (var i=0; i<rateArray.length; i++) {
+     rateArray[i].update();
+     printout2.innerHTML += rateArray[0].value + " | ";
+  }
+  
+  printout3.innerHTML += time + " | ";
+}
+
+
+function loop() {
+   time = time + 1;
+   printout3.innerHTML += time + " | ";
+
+   for (var i=0; i<levelArray.length; i++) {
+        levelArray[i].update();
+   }
+   printout1.innerHTML += levelArray[0].value + " | ";
+   
+   graph1.plot([levelArray[0].value]);
+   
+   for (var i=0; i<auxiliaryArray.length; i++) {
+        auxiliaryArray[i].update();
+  }
+  
+   for (var i=0; i<rateArray.length; i++) {
+        rateArray[i].update();
+        
+  }
+    
+    printout2.innerHTML += rateArray[0].value + " | ";
+    
+    var timerVar = setTimeout(loop, 300);
+    
+    if (time >= stoptime) {clearTimeout (timerVar)};
+ }
+ 
+ function load() {
+    init();
+    
+    graph1 = new Graph("canvas1", 0, 20, 0, 500, ["red"], ["y"], ["0", "20", "0", "500"]); // arguments: Arg1: canvasId, Arg2: maxX, Arg3: maxY, Arg4: [vector of colors]; this determines the size of yValue matrix (if we state one color as eg. ["red"], we assume only one time series, ["red", "green", "blue"] -> three time series) 
+    
+    
+    loop();
+    
+    
+}
+</script>
+
+</body>
+
+</html>
+  
