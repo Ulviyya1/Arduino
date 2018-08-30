@@ -123,7 +123,7 @@ stopControlAlgorithm ();
 pCoeff = document.getElementById("pCoeff").value;
 socket.emit("startControlAlgorithm", {"ctrlAlgNo": 1, "pCoeff": pCoeff}); // send pCoeff value
  }
- function startControlAlgorithm2 () {
+function startControlAlgorithm2 () {
 // first stop ctrlAlg, just in case
 stopControlAlgorithm ();
  Kp1 = document.getElementById("Kp1").value;
