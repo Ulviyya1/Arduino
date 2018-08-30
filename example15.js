@@ -31,7 +31,7 @@ var desiredValue = 0; // desired value var
 var actualValue = 0; // variable for actual value (output value)
 var factor = 0.1; // proportional factor that determines the speed of aproaching toward desired value
 // PID Algorithm variables
-var Kp = 0.55; // proportional factor
+var Kp = 0.15; // proportional factor
 var Ki = 0.008; // integral factor
 var Kd = 0.15; // differential factor
 var pwm = 0;
