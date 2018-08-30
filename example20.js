@@ -86,6 +86,7 @@ sendValueViaSocket = function (value) {
      board.analogWrite(3, Math.abs(pwm));
     
   }
+  
   if (parameters.ctrlAlgNo == 2) {
    err = desiredValue - actualValue; // error as difference between desired and actual val.
   errSum += err; // sum of errors | like integral
@@ -103,8 +104,8 @@ sendValueViaSocket = function (value) {
   if (pwm < 0) {board.digitalWrite(2,1)}  // direction if < 0
   board.analogWrite(3, Math.abs(pwm));
   lastErr = err;
-  
  }
+ 
   if (parameters.ctrlAlgNo == 3) {
    err = desiredValue - actualValue; // error as difference between desired and actual val.
     errSum += err; // sum of errors | like integral
@@ -135,6 +136,7 @@ sendValueViaSocket = function (value) {
    
    }
   }
+  
  function stopControlAlgorithm () {
  clearInterval(intervalCtrl); // clear the interval of control algorihtm
   board.analogWrite(3, 0);
@@ -148,6 +150,7 @@ sendValueViaSocket = function (value) {
    console.log("Control algorithm has been stopped.");
   sendStaticMsgViaSocket("Stopped.");
   }
+  
  function sendValues (socket) {
    socket.emit("clientReadValues",
    {
