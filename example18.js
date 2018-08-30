@@ -77,7 +77,7 @@ sendValueViaSocket = function (value) {
    if (pwm > 0) {board.digitalWrite(2,0);} // direction if > 0
    if (pwm < 0) {board.digitalWrite(2,1); } // direction if < 0
      board.analogWrite(3, Math.abs(pwm));
-     if ((actualValue < 140 || actualValue > 888) && (desiredValue < 140 || desiredValue > 888)) {stopControlAlgorithm()}
+     if (actualValue < 300 || actualValue > 700) {stopControlAlgorithm()}
   }
   if (parameters.ctrlAlgNo == 2) {
    err = desiredValue - actualValue; // error as difference between desired and actual val.
@@ -90,7 +90,7 @@ sendValueViaSocket = function (value) {
   if (pwm < 0) {board.digitalWrite(2,1)}  // direction if < 0
   board.analogWrite(3, Math.abs(pwm));
   lastErr = err;
-  if ((actualValue < 140 || actualValue > 888) && (desiredValue < 140 || desiredValue > 888)) {stopControlAlgorithm()}
+  if (actualValue < 300 || actualValue > 700) {stopControlAlgorithm()}
  }
   if (parameters.ctrlAlgNo == 3) {
    err = desiredValue - actualValue; // error as difference between desired and actual val.
